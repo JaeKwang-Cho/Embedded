@@ -92,17 +92,18 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  /*
+
 	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, 1);
 	  HAL_Delay(100);
 	  HAL_GPIO_WritePin(GPIO_LED_GPIO_Port, GPIO_LED_Pin,  0);
 	  HAL_Delay(100);
-	  */
-	  if(!HAL_GPIO_ReadPin(GPIO_MY_SWITCH_Pin, GPIO_MY_SWITCH_GPIO_Port)){
+	  /*
+	  if(!HAL_GPIO_ReadPin(GPIO_MY_SWITCH_GPIO_Port, GPIO_MY_SWITCH_Pin)){
 		  HAL_GPIO_WritePin(GPIO_LED_GPIO_Port, GPIO_LED_Pin,  0);
 	  }else{
-		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, 1);
+		  HAL_GPIO_WritePin(GPIO_LED_GPIO_Port, GPIO_LED_Pin,  1);
 	  }
+	  */
 	  HAL_Delay(100);
 
     /* USER CODE END WHILE */
@@ -161,7 +162,7 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOA_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIO_LED_GPIO_Port, GPIO_LED_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIO_LED_GPIO_Port, GPIO_LED_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin : GPIO_LED_Pin */
   GPIO_InitStruct.Pin = GPIO_LED_Pin;
