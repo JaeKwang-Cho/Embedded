@@ -70,7 +70,6 @@ int main(void)
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
-
   /* USER CODE BEGIN Init */
 
   /* USER CODE END Init */
@@ -83,20 +82,39 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
-  MX_GPIO_Init();
+  //MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
+
+  	volatile unsigned int * reg = 0x40021018;
+  	*reg |= 16;
+
+  	GPIO_InitTypeDef GPIO_InitStruct = {0};
+  	GPIO_InitStruct.Pin = GPIO_LED_OUTPUT_Pin;
+  	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  	GPIO_InitStruct.Pull = GPIO_PULLUP;
+  	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+  	HAL_GPIO_Init(GPIO_LED_OUTPUT_GPIO_Port, &GPIO_InitStruct);
+
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  	  volatile unsigned int* reg2 = 0x40011010;
   while (1)
   {
 
+	 *reg2 = 0x2000;
+	 HAL_Delay(100);
+	 *reg2 = (0x2000 << 16);
+	 HAL_Delay(100);
+
+	  /*
 	  HAL_GPIO_WritePin(GPIO_LED_OUTPUT_GPIO_Port, GPIO_LED_OUTPUT_Pin, 1);
 	  HAL_Delay(100);
 	  HAL_GPIO_WritePin(GPIO_LED_OUTPUT_GPIO_Port, GPIO_LED_OUTPUT_Pin,0);
 	  HAL_Delay(100);
+	  */
 	  /*
 	  if(!HAL_GPIO_ReadPin(GPIO_SW_INPUT_GPIO_Port, GPIO_SW_INPUT_Pin)){
 	  	  HAL_GPIO_WritePin(GPIO_LED_OUTPUT_GPIO_Port, GPIO_LED_OUTPUT_Pin,  0);
