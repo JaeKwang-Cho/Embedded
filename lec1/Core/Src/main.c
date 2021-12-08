@@ -88,25 +88,30 @@ int main(void)
   	volatile unsigned int * reg = 0x40021018;
   	*reg |= 16;
 
+  	/*
   	GPIO_InitTypeDef GPIO_InitStruct = {0};
   	GPIO_InitStruct.Pin = GPIO_LED_OUTPUT_Pin;
   	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   	GPIO_InitStruct.Pull = GPIO_PULLUP;
   	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   	HAL_GPIO_Init(GPIO_LED_OUTPUT_GPIO_Port, &GPIO_InitStruct);
+  	*/
+  	volatile unsigned int * reg2 = 0x40011004;
+  	*reg2 = (*reg2 & ~ (15UL << 20)) | (3 << 20);
+
 
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  	  volatile unsigned int* reg2 = 0x40011010;
+  	  volatile unsigned int* reg3 = 0x40011010;
   while (1)
   {
 
-	 *reg2 = 0x2000;
+	 *reg3 = 0x2000;
 	 HAL_Delay(100);
-	 *reg2 = (0x2000 << 16);
+	 *reg3 = (0x2000 << 16);
 	 HAL_Delay(100);
 
 	  /*
